@@ -1,0 +1,16 @@
+ENTRY(start)
+SECTIONS
+{
+	. = 01000;
+	.text : {
+		*(.text)
+		*(.rodata)
+	}
+	.data : {
+		*(.data)
+	}
+	.bss : {
+		*(.bss)
+	}
+	end = .;
+}
