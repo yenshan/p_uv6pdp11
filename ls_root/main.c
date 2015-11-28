@@ -21,7 +21,7 @@ iget(int ino, inode_t *dst_ibuf)
     static const int inodes_per_block = BLOCK_SIZE / sizeof(inode_t);
 
     if (ino <= 0)
-       return IGET_OK;
+       return IGET_ERROR;
 
     static char _buf[BLOCK_SIZE];
     int blk_no = inode_start_block + (ino-1) / inodes_per_block;
@@ -30,7 +30,7 @@ iget(int ino, inode_t *dst_ibuf)
     int i_offset = ((ino-1) % inodes_per_block) * sizeof(inode_t);
     memcpy(dst_ibuf, _buf+i_offset, sizeof(inode_t));
 
-    return IGET_ERROR; 
+    return IGET_OK; 
 }
 
 typedef struct {
