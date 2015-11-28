@@ -1,0 +1,16 @@
+ENTRY(start)
+SECTIONS
+{
+  . = 24*2048-512;
+  .text : {
+    *(.text)
+    *(.rodata)
+  }
+  .data : {
+    *(.data)
+  }
+  .bss :  {
+    *(.bss)
+  }
+  end = .;
+}

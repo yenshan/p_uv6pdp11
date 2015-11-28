@@ -1,0 +1,4 @@
+set cpu 11/40
+set cpu u18
+att rk0 unix0_v6_rk.dsk
+l read_dsk.lda
