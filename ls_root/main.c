@@ -8,22 +8,29 @@ extern void puts(const char*);
 extern int getchar(void);
 extern int getline(char *);
 
+typedef enum {
+    IGET_OK,
+    IGET_ERROR
+} IgetResultT;
 
-inode_t
-iget(int ino)
+IgetResultT
+iget(int ino, inode_t *dst_ibuf)
 {
     void memcpy(void *dst, void *src, int n);
     static const int inode_start_block = 2;
     static const int inodes_per_block = BLOCK_SIZE / sizeof(inode_t);
 
+    if (ino <= 0)
+       return IGET_OK;
+
     static char _buf[BLOCK_SIZE];
     int blk_no = inode_start_block + (ino-1) / inodes_per_block;
     read_blk(0, blk_no, _buf);
     
-    inode_t ibuf;
     int i_offset = ((ino-1) % inodes_per_block) * sizeof(inode_t);
-    memcpy(&ibuf, _buf+i_offset, sizeof(inode_t));
-    return ibuf; 
+    memcpy(dst_ibuf, _buf+i_offset, sizeof(inode_t));
+
+    return IGET_ERROR; 
 }
 
 typedef struct {
@@ -35,7 +42,8 @@ int
 cstart()
 {
   // get root's inode info
-  inode_t inode = iget(1);
+  inode_t inode;
+  iget(1, &inode);
 
   // print file name in root directory
   dir_t dir_info[BLOCK_SIZE/sizeof(dir_t)],
