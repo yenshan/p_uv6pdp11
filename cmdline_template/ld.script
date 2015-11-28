@@ -1,0 +1,19 @@
+ENTRY(start)
+SECTIONS
+{
+	. = 01000;
+	.text : {
+		*(.text)
+		*(.rodata)
+		. = ALIGN(0100);
+	}
+	.data : {
+		*(.data)
+		. = ALIGN(0100);
+	}
+	.bss : {
+		*(.bss)
+		. = ALIGN(0100);
+	}
+	end = .;
+}
