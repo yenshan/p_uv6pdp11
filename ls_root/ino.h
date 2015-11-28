@@ -5,7 +5,7 @@ typedef struct inode {
   char i_nlink;
   char i_uid;
   char i_gid;
-  char i_size0;
+  uint8_t i_size0;
   uint16_t i_size1;
   uint16_t i_addr[8];
   int16_t i_atime[2];
